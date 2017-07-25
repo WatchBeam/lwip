@@ -20,14 +20,35 @@
             ['OS=="freebsd"', {
                 'cflags!': ['-fno-exceptions'],
                 'cflags_cc!': ['-fno-exceptions'],
+                'link_settings': {
+                    'libraries': [
+                        '-lpng',
+                        '-ljpeg',
+                        '-lgif',
+                    ],
+                },
             }],
             ['OS=="solaris"', {
                 'cflags!': ['-fno-exceptions'],
                 'cflags_cc!': ['-fno-exceptions'],
+                'link_settings': {
+                    'libraries': [
+                        '-lpng',
+                        '-ljpeg',
+                        '-lgif',
+                    ],
+                },
             }],
             ['OS=="linux"', {
                 'cflags!': ['-fno-exceptions'],
                 'cflags_cc!': ['-fno-exceptions'],
+                'link_settings': {
+                    'libraries': [
+                        '-lpng',
+                        '-ljpeg',
+                        '-lgif',
+                    ],
+                },
             }],
             ['OS=="mac"', {
                 'xcode_settings': {
@@ -36,7 +57,14 @@
                           '-stdlib=libc++',
                           '-std=c++0x']
                 },
-                'include_dirs': ['/usr/include/malloc']
+                'include_dirs': ['/usr/include/malloc'],
+                'link_settings': {
+                    'libraries': [
+                        '-lpng',
+                        '-ljpeg',
+                        '-lgif',
+                    ],
+                },
             }],
             ['OS=="win"', {
                 'configurations': {
@@ -138,20 +166,41 @@
         'include_dirs': [
             '<!(node -e "require(\'nan\')")',
             'src/encoder',
-            'src/lib/cimg'
+            'src/lib/cimg',
         ],
         'conditions': [
             ['OS=="freebsd"', {
                 'cflags!': ['-fno-exceptions'],
                 'cflags_cc!': ['-fno-exceptions'],
+                'link_settings': {
+                    'libraries': [
+                        '-lpng',
+                        '-ljpeg',
+                        '-lgif',
+                    ],
+                },
             }],
             ['OS=="solaris"', {
                 'cflags!': ['-fno-exceptions'],
                 'cflags_cc!': ['-fno-exceptions'],
+                'link_settings': {
+                    'libraries': [
+                        '-lpng',
+                        '-ljpeg',
+                        '-lgif',
+                    ],
+                },
             }],
             ['OS=="linux"', {
                 'cflags!': ['-fno-exceptions'],
                 'cflags_cc!': ['-fno-exceptions'],
+                'link_settings': {
+                    'libraries': [
+                        '-lpng',
+                        '-ljpeg',
+                        '-lgif',
+                    ],
+                },
             }],
             ['OS=="mac"', {
                 'xcode_settings': {
@@ -160,7 +209,14 @@
                           '-stdlib=libc++',
                           '-std=c++0x']
                 },
-                'include_dirs': ['/usr/include/malloc']
+                'include_dirs': ['/usr/include/malloc'],
+                'link_settings': {
+                    'libraries': [
+                        '-lpng',
+                        '-ljpeg',
+                        '-lgif',
+                    ],
+                },
             }],
             ['OS=="win"', {
                 'configurations': {
