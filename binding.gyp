@@ -128,10 +128,12 @@
     },{
         "target_name": "lwip_encoder",
         "sources": [
+            # LWIP:
+            #######
             "src/encoder/init.cpp",
             "src/encoder/jpeg_worker.cpp",
             "src/encoder/png_worker.cpp",
-            "src/encoder/gif_worker.cpp"
+            "src/encoder/gif_worker.cpp",
         ],
         'include_dirs': [
             '<!(node -e "require(\'nan\')")',
