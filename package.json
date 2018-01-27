@@ -1,7 +1,7 @@
 {
   "name": "@mcph/lwip",
   "version": "1.0.2",
-  "main": "lib/index.js",
+  "main": "lib/obtain.js",
   "typings": "typings.d.ts",
   "dependencies": {
     "async": "^2.6.0",
