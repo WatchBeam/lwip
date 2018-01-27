@@ -20,7 +20,6 @@
   "devDependencies": {
     "mkdirp": "^0.5.1",
     "mocha": "^5.0.0",
-    "mocha-lcov-reporter": "^1.2.0",
     "should": "^13.2.1"
   },
   "repository": {
