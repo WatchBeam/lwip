@@ -1,10 +1,4 @@
-[![Version](http://img.shields.io/npm/v/lwip.svg)](https://www.npmjs.org/package/lwip)
-[![Build Status](https://api.travis-ci.org/EyalAr/lwip.svg?branch=master)](https://travis-ci.org/EyalAr/lwip)
-[![Build status](https://ci.appveyor.com/api/projects/status/46mk5218x995svhw/branch/master?svg=true)](https://ci.appveyor.com/project/EyalAr/lwip/branch/master)
-
 # Light-weight image processor for NodeJS
-
-[![Join the chat at https://gitter.im/EyalAr/lwip](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/EyalAr/lwip?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 0. [Overview](#overview)
 1. [Installation](#installation)
@@ -92,7 +86,7 @@ require('lwip').open('image.jpg', function(err, image){
 
   // check err...
   // define a batch of manipulations and save to disk as JPEG:
-  image.batch()
+  new Batch(image)
     .scale(0.75)          // scale to 75%
     .rotate(45, 'white')  // rotate 45degs clockwise (white fill)
     .crop(200, 200)       // crop a 200X200 square from center
@@ -726,7 +720,7 @@ from the image.
 
 ```Javascript
 // obtain a batch object from the image:
-var batch = image.batch();
+var batch = new Batch(image);
 ```
 
 #### Using a batch object
@@ -788,8 +782,8 @@ An image can have more than one batch object, but all batch objects modify the
 same underlying image. This means the order of execution matters.
 
 ```Javascript
-var batch1 = image.batch().rotate('45', 'black');
-var batch2 = image.batch().border(15, 'black');
+var batch1 = new Batch(image).rotate('45', 'black');
+var batch2 = new Batch(image).border(15, 'black');
 ```
 
 This will rotate the image 45degs and then add a black border:
