@@ -1,35 +1,27 @@
 {
   "name": "@mcph/lwip",
   "version": "1.0.2",
-  "main": "index.js",
+  "main": "lib/index.js",
   "typings": "typings.d.ts",
   "dependencies": {
-    "async": "^2.5.0",
+    "async": "^2.6.0",
     "bindings": "^1.3.0",
-    "decree": "0.0.6",
-    "nan": "^2.6.2"
+    "nan": "^2.8.0"
   },
   "scripts": {
     "install": "node-gyp rebuild -j 8",
-    "test": "./node_modules/.bin/mocha --opts tests/mocha.opts tests",
-    "coverage":
-      "./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha -- --opts tests/mocha.opts tests",
-    "travis":
-      "./node_modules/.bin/istanbul cover --report lcovonly ./node_modules/.bin/_mocha -- --opts tests/mocha.opts --bail tests && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "mocha -b --opts tests/mocha.opts tests"
   },
   "gypfile": true,
-  "description":
-    "Comprehensive, fast, and simple image processing and manipulation",
+  "description": "Comprehensive, fast, and simple image processing and manipulation",
   "directories": {
     "example": "examples"
   },
   "devDependencies": {
-    "coveralls": "^2.11.9",
-    "istanbul": "^0.4.3",
     "mkdirp": "^0.5.1",
-    "mocha": "^3.4.2",
+    "mocha": "^5.0.0",
     "mocha-lcov-reporter": "^1.2.0",
-    "should": "^8.3.2"
+    "should": "^13.2.1"
   },
   "repository": {
     "type": "git",
