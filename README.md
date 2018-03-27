@@ -1,56 +1,49 @@
-[![Version](http://img.shields.io/npm/v/lwip.svg)](https://www.npmjs.org/package/lwip)
-[![Build Status](https://api.travis-ci.org/EyalAr/lwip.svg?branch=master)](https://travis-ci.org/EyalAr/lwip)
-[![Build status](https://ci.appveyor.com/api/projects/status/46mk5218x995svhw/branch/master?svg=true)](https://ci.appveyor.com/project/EyalAr/lwip/branch/master)
-[![Coverage Status](https://img.shields.io/coveralls/EyalAr/lwip/master.svg)](https://coveralls.io/r/EyalAr/lwip)
-
 # Light-weight image processor for NodeJS
 
-[![Join the chat at https://gitter.im/EyalAr/lwip](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/EyalAr/lwip?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 0. [Overview](#overview)
-  0. [Installation](#installation)
-  0. [Usage](#usage)
-  0. [Supported formats](#supported-formats)
-  0. [Colors specification](#colors-specification)
-  0. [Note on transparent images](#note-on-transparent-images)
-0. [API](#api)
-  0. [Open an image from file or buffer](#open-an-image)
-  0. [Create a new blank image](#create-a-new-image)
-  0. [Image operations](#image-operations)
-    0. [Resize](#resize)
-    0. [Scale](#scale)
-    0. [Contain](#contain)
-    0. [Cover](#cover)
-    0. [Rotate](#rotate)
-    0. [Crop](#crop)
-    0. [Blur](#blur)
-    0. [Sharpen](#sharpen)
-    0. [Mirror](#mirror)
-    0. [Flip](#flip)
-    0. [Border](#border)
-    0. [Pad](#pad)
-    0. [Adjust saturation](#saturate)
-    0. Adjust lightness: [lighten](#lighten) / [darken](#darken)
-    0. [Adjust hue](#hue)
-    0. [Fade (adjust transparency)](#fade)
-    0. [Opacify](#opacify)
-    0. [Paste](#paste)
-    0. [Set pixel](#set-pixel)
-    0. [Set metadata](#set-metadata)
-  0. [Getters](#getters)
-    0. [Width](#width)
-    0. [Height](#height)
-    0. [Pixel](#get-pixel)
-    0. [Clone](#clone)
-    0. [Extract / Copy](#extract)
-    0. [Get as a Buffer](#get-as-a-buffer)
-      0. [JPEG](#jpeg)
-      0. [PNG](#png)
-      0. [GIF](#gif)
-    0. [Write to file](#write-to-file)
-    0. [Get metadata](#get-metadata)
-  0. [Batch operations](#batch-operations)
-0. [Copyrights](#copyrights)
+1. [Installation](#installation)
+1. [Usage](#usage)
+1. [Supported formats](#supported-formats)
+1. [Colors specification](#colors-specification)
+1. [Note on transparent images](#note-on-transparent-images)
+1. [API](#api)
+1. [Open an image from file or buffer](#open-an-image)
+1. [Create a new blank image](#create-a-new-image)
+1. [Image operations](#image-operations)
+   0. [Resize](#resize)
+   1. [Scale](#scale)
+   1. [Contain](#contain)
+   1. [Cover](#cover)
+   1. [Rotate](#rotate)
+   1. [Crop](#crop)
+   1. [Blur](#blur)
+   1. [Sharpen](#sharpen)
+   1. [Mirror](#mirror)
+   1. [Flip](#flip)
+   1. [Border](#border)
+   1. [Pad](#pad)
+   1. [Adjust saturation](#saturate)
+   1. Adjust lightness: [lighten](#lighten) / [darken](#darken)
+   1. [Adjust hue](#hue)
+   1. [Fade (adjust transparency)](#fade)
+   1. [Opacify](#opacify)
+   1. [Paste](#paste)
+   1. [Set pixel](#set-pixel)
+   1. [Set metadata](#set-metadata)
+1. [Getters](#getters)
+   0. [Width](#width)
+   1. [Height](#height)
+   1. [Pixel](#get-pixel)
+   1. [Clone](#clone)
+   1. [Extract / Copy](#extract)
+   1. [Get as a Buffer](#get-as-a-buffer)
+   1. [JPEG](#jpeg)
+   1. [PNG](#png)
+   1. [GIF](#gif)
+   1. [Write to file](#write-to-file)
+   1. [Get metadata](#get-metadata)
+1. [Batch operations](#batch-operations)
+1. [Copyrights](#copyrights)
 
 ## Overview
 
@@ -82,8 +75,8 @@ Building on Windows with Visual Studio requires version 2013 or higher.
 **Typical workflow:**
 
 0. Open an image and get an image object.
-0. Manipulate it.
-0. Save to disk / Send image buffer over network / etc.
+1. Manipulate it.
+1. Save to disk / Send image buffer over network / etc.
 
 **Example (batch operations):**
 
@@ -93,7 +86,7 @@ require('lwip').open('image.jpg', function(err, image){
 
   // check err...
   // define a batch of manipulations and save to disk as JPEG:
-  image.batch()
+  new Batch(image)
     .scale(0.75)          // scale to 75%
     .rotate(45, 'white')  // rotate 45degs clockwise (white fill)
     .crop(200, 200)       // crop a 200X200 square from center
@@ -142,16 +135,16 @@ lwip.open('image.jpg', function(err, image){
 
 **Decoding (reading):**
 
-- JPEG, 1 & 3 channels (grayscale & RGB).
-- PNG, transparency supported.
-- GIF, transparency supported. Animated GIFs can be read, but only the first
+* JPEG, 1 & 3 channels (grayscale & RGB).
+* PNG, transparency supported.
+* GIF, transparency supported. Animated GIFs can be read, but only the first
   frame will be retrieved.
 
 **Encoding (writing):**
 
-- JPEG, 3 channels (RGB).
-- PNG (lossless), 3 channels (RGB) or 4 channels (RGBA).
-- GIF (no animations)
+* JPEG, 3 channels (RGB).
+* PNG (lossless), 3 channels (RGB) or 4 channels (RGBA).
+* GIF (no animations)
 
 Other formats may also be supported in the future, but are probably less urgent.
 Check the issues to see [which formats are planned to be supported](https://github.com/EyalAr/lwip/issues?labels=format+request&page=1&state=open).
@@ -163,7 +156,7 @@ In LWIP colors are coded as RGBA values (red, green, blue and an alpha channel).
 
 Colors are specified in one of three ways:
 
-- As a string. possible values:
+* As a string. possible values:
 
   ```Javascript
   "black"    // {r: 0, g: 0, b: 0, a: 100}
@@ -177,9 +170,9 @@ Colors are specified in one of three ways:
   "magenta"  // {r: 255, g: 0, b: 255, a: 100}
   ```
 
-- As an array `[R, G, B, A]` where `R`, `G` and `B` are integers between 0 and
+* As an array `[R, G, B, A]` where `R`, `G` and `B` are integers between 0 and
   255 and `A` is an integer between 0 and 100.
-- As an object `{r: R, g: G, b: B, a: A}` where `R`, `G` and `B` are integers
+* As an object `{r: R, g: G, b: B, a: A}` where `R`, `G` and `B` are integers
   between 0 and 255 and `A` is an integer between 0 and 100.
 
 **Note**: The `A` value (alpha channel) is always optional and defaults to
@@ -189,7 +182,7 @@ Colors are specified in one of three ways:
 
 0. Transparency is supported through an alpha channel which ranges between 0
    and 100. 0 is completely transparent and 100 is completely opaque.
-0. Not all formats support transparency. If an image with an alpha channel is
+1. Not all formats support transparency. If an image with an alpha channel is
    encoded with a format which does not support transparency, the alpha channel
    will be ignored (effectively setting it to 100% for all pixels).
 
@@ -200,9 +193,9 @@ by:
 
 0. Openning an existing image file or buffer with the [`open`](#open-an-image)
    method.
-0. Creating a new image object with the [`create`](#create-a-new-image) method.
-0. Cloning an existing image object with the [`image.clone`](#clone) method.
-0. Extracting a sub-image from an existing image object with the
+1. Creating a new image object with the [`create`](#create-a-new-image) method.
+1. Cloning an existing image object with the [`image.clone`](#clone) method.
+1. Extracting a sub-image from an existing image object with the
    [`image.extract`](#extract) method.
 
 ### Open an image
@@ -210,20 +203,20 @@ by:
 `lwip.open(source, type, callback)`
 
 0. `source {String/Buffer}`: The path to the image on disk or an image buffer.
-0. `type {String/Object}`: **Optional** type of the image. If omitted, the type
+1. `type {String/Object}`: **Optional** type of the image. If omitted, the type
    will be inferred from the file extension. If `source` is a buffer, `type`
    must be specified. If `source` is an encoded image buffer, `type` must be
    a string of the image type (i.e. `"jpg"`). If `source` is a raw pixels buffer
    `type` must be an object with `type.width` and `type.height` properties.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 **Note about raw pixels buffers:** `source` may be a buffer of raw pixels. The
 buffer may contain pixels of 1-4 channels, where:
 
 0. 1 channel is a grayscale image.
-0. 2 channels is a grayscale image with an alpha channel.
-0. 3 channels is an RGB image.
-0. 4 channels is an RGBA image (with an alpha channel).
+1. 2 channels is a grayscale image with an alpha channel.
+1. 3 channels is an RGB image.
+1. 4 channels is an RGBA image (with an alpha channel).
 
 In other words, if the image in the buffer has width `W` and height `H`, the
 size of the buffer can be `W*H`, `2*W*H`, `3*W*H` or `4*W*H`.
@@ -261,11 +254,11 @@ fs.readFile('path/to/image.png', function(err, buffer){
 `lwip.create(width, height, color, callback)`
 
 0. `width {Integer>0}`: The width of the new image.
-0. `height {Integer>0}`: The height of the new image.
-0. `color {String / Array / Object}`: **Optional** Color of the canvas. See
+1. `height {Integer>0}`: The height of the new image.
+1. `color {String / Array / Object}`: **Optional** Color of the canvas. See
    [colors specification](#colors-specification). Defaults to a transparent
    canvas `{r:0, g:0, b:0, a:0}`.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 **Example**:
 
@@ -285,34 +278,34 @@ lwip.create(500, 500, 'yellow', function(err, image){
 `image.resize(width, height, inter, callback)`
 
 0. `width {Integer}`: Width in pixels.
-0. `height {Integer}`: **Optional** height in pixels. If omitted, `width` will
+1. `height {Integer}`: **Optional** height in pixels. If omitted, `width` will
    be used.
-0. `inter {String}`: **Optional** interpolation method. Defaults to `"lanczos"`.
+1. `inter {String}`: **Optional** interpolation method. Defaults to `"lanczos"`.
    Possible values:
-   - `"nearest-neighbor"`
-   - `"moving-average"`
-   - `"linear"`
-   - `"grid"`
-   - `"cubic"`
-   - `"lanczos"`
-0. `callback {Function(err, image)}`
+   * `"nearest-neighbor"`
+   * `"moving-average"`
+   * `"linear"`
+   * `"grid"`
+   * `"cubic"`
+   * `"lanczos"`
+1. `callback {Function(err, image)}`
 
 #### Scale
 
 `image.scale(wRatio, hRatio, inter, callback)`
 
 0. `wRatio {Float}`: Width scale ratio.
-0. `hRatio {Float}`: **Optional** height scale ratio. If omitted, `wRatio` will
+1. `hRatio {Float}`: **Optional** height scale ratio. If omitted, `wRatio` will
    be used.
-0. `inter {String}`: **Optional** interpolation method. Defaults to `"lanczos"`.
+1. `inter {String}`: **Optional** interpolation method. Defaults to `"lanczos"`.
    Possible values:
-   - `"nearest-neighbor"`
-   - `"moving-average"`
-   - `"linear"`
-   - `"grid"`
-   - `"cubic"`
-   - `"lanczos"`
-0. `callback {Function(err, image)}`
+   * `"nearest-neighbor"`
+   * `"moving-average"`
+   * `"linear"`
+   * `"grid"`
+   * `"cubic"`
+   * `"lanczos"`
+1. `callback {Function(err, image)}`
 
 #### Contain
 
@@ -322,18 +315,18 @@ possible size such that it's fully contained inside the canvas.
 `image.contain(width, height, color, inter, callback)`
 
 0. `width {Integer}`: Canvas' width in pixels.
-0. `height {Integer}`: Canvas' height in pixels.
-0. `color {String / Array / Object}`: **Optional** Color of the canvas. See
+1. `height {Integer}`: Canvas' height in pixels.
+1. `color {String / Array / Object}`: **Optional** Color of the canvas. See
    [colors specification](#colors-specification).
-0. `inter {String}`: **Optional** interpolation method. Defaults to `"lanczos"`.
+1. `inter {String}`: **Optional** interpolation method. Defaults to `"lanczos"`.
    Possible values:
-   - `"nearest-neighbor"`
-   - `"moving-average"`
-   - `"linear"`
-   - `"grid"`
-   - `"cubic"`
-   - `"lanczos"`
-0. `callback {Function(err, image)}`
+   * `"nearest-neighbor"`
+   * `"moving-average"`
+   * `"linear"`
+   * `"grid"`
+   * `"cubic"`
+   * `"lanczos"`
+1. `callback {Function(err, image)}`
 
 #### Cover
 
@@ -344,25 +337,25 @@ dimensions. Margins of the image exceeding the canvas will be discarded.
 `image.cover(width, height, inter, callback)`
 
 0. `width {Integer}`: Canvas' width in pixels.
-0. `height {Integer}`: Canvas' height in pixels.
-0. `inter {String}`: **Optional** interpolation method. Defaults to `"lanczos"`.
+1. `height {Integer}`: Canvas' height in pixels.
+1. `inter {String}`: **Optional** interpolation method. Defaults to `"lanczos"`.
    Possible values:
-   - `"nearest-neighbor"`
-   - `"moving-average"`
-   - `"linear"`
-   - `"grid"`
-   - `"cubic"`
-   - `"lanczos"`
-0. `callback {Function(err, image)}`
+   * `"nearest-neighbor"`
+   * `"moving-average"`
+   * `"linear"`
+   * `"grid"`
+   * `"cubic"`
+   * `"lanczos"`
+1. `callback {Function(err, image)}`
 
 #### Rotate
 
 `image.rotate(degs, color, callback)`
 
 0. `degs {Float}`: Clockwise rotation degrees.
-0. `color {String / Array / Object}`: **Optional** Color of the canvas. See
+1. `color {String / Array / Object}`: **Optional** Color of the canvas. See
    [colors specification](#colors-specification).
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 #### Crop
 
@@ -371,7 +364,7 @@ dimensions. Margins of the image exceeding the canvas will be discarded.
 `image.crop(left, top, right, bottom, callback)`
 
 0. `left, top, right, bottom {Integer}`: Coordinates of the crop rectangle.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 #### Crop a rectangle from center
 
@@ -379,7 +372,7 @@ dimensions. Margins of the image exceeding the canvas will be discarded.
 
 0. `width, height {Integer}`: Width and height of the rectangle to crop from the
    center of the image.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 #### Blur
 
@@ -388,7 +381,7 @@ Gaussian blur.
 `image.blur(sigma, callback)`
 
 0. `sigma {Float>=0}`: Standard deviation of the Gaussian filter.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 #### Sharpen
 
@@ -397,7 +390,7 @@ Inverse diffusion shapren.
 `image.sharpen(amplitude, callback)`
 
 0. `amplitude {Float}`: Sharpening amplitude.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 #### Mirror
 
@@ -406,7 +399,7 @@ Mirror an image along the 'x' axis, 'y' axis or both.
 `image.mirror(axes, callback)`
 
 0. `axes {String}`: `'x'`, `'y'` or `'xy'` (case sensitive).
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 #### Flip
 
@@ -419,9 +412,9 @@ Add a colored border to the image.
 `image.border(width, color, callback)`
 
 0. `width {Integer}`: Border width in pixels.
-0. `color {String / Array / Object}`: **Optional** Color of the border. See
+1. `color {String / Array / Object}`: **Optional** Color of the border. See
    [colors specification](#colors-specification).
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 #### Pad
 
@@ -430,9 +423,9 @@ Pad image edges with colored pixels.
 `image.pad(left, top, right, bottom, color, callback)`
 
 0. `left, top, right, bottom {Integer}`: Number of pixels to add to each edge.
-0. `color {String / Array / Object}`: **Optional** Color of the padding. See
+1. `color {String / Array / Object}`: **Optional** Color of the padding. See
    [colors specification](#colors-specification).
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 #### Saturate
 
@@ -441,13 +434,13 @@ Adjust image saturation.
 `image.saturate(delta, callback)`
 
 0. `delta {Float}`: By how much to increase / decrease the saturation.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 **Examples**:
 
 0. `image.saturate(0, ...)` will have no effect on the image.
-0. `image.saturate(0.5, ...)` will increase the saturation by 50%.
-0. `image.saturate(-1, ...)` will decrease the saturation by 100%, effectively
+1. `image.saturate(0.5, ...)` will increase the saturation by 50%.
+1. `image.saturate(-1, ...)` will decrease the saturation by 100%, effectively
    desaturating the image.
 
 #### Lighten
@@ -457,13 +450,13 @@ Adjust image lightness.
 `image.lighten(delta, callback)`
 
 0. `delta {Float}`: By how much to increase / decrease the lightness.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 **Examples**:
 
 0. `image.lighten(0, ...)` will have no effect on the image.
-0. `image.lighten(0.5, ...)` will increase the lightness by 50%.
-0. `image.lighten(-1, ...)` will decrease the lightness by 100%, effectively
+1. `image.lighten(0.5, ...)` will increase the lightness by 50%.
+1. `image.lighten(-1, ...)` will decrease the lightness by 100%, effectively
    making the image black.
 
 #### Darken
@@ -481,12 +474,12 @@ Adjust image hue.
 `image.hue(shift, callback)`
 
 0. `shift {Float}`: By how many degrees to shift each pixel's hue.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 **Examples**:
 
 0. `image.lighten(0, ...)` will have no effect on the image.
-0. `image.lighten(100, ...)` will shift pixels' hue by 100 degrees.
+1. `image.lighten(100, ...)` will shift pixels' hue by 100 degrees.
 
 **Note:** The hue is shifted in a circular manner in the range [0,360] for each
 pixel individually.
@@ -498,15 +491,15 @@ Adjust image transperancy.
 `image.fade(delta, callback)`
 
 0. `delta {Float}`: By how much to increase / decrease the transperancy.
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 **Note:** The transparency is adjusted independently for each pixel.
 
 **Examples**:
 
 0. `image.fade(0, ...)` will have no effect on the image.
-0. `image.fade(0.5, ...)` will increase the transparency by 50%.
-0. `image.fade(1, ...)` will make the image completely transparent.
+1. `image.fade(0.5, ...)` will increase the transparency by 50%.
+1. `image.fade(1, ...)` will make the image completely transparent.
 
 #### Opacify
 
@@ -524,18 +517,18 @@ Paste an image on top of this image.
 
 0. `left, top {Integer}`: Coordinates of the top-left corner of the pasted
    image.
-0. `img {Image object}`: The image to paste.
-0. `callback {Function(err, image)}`
+1. `img {Image object}`: The image to paste.
+1. `callback {Function(err, image)}`
 
 **Notes:**
 
 0. If the pasted image exceeds the bounds of the base image, an exception
    is thrown.
-0. `img` is pasted in the state it was at the time `image.paste( ... )` was
+1. `img` is pasted in the state it was at the time `image.paste( ... )` was
    called, eventhough `callback` is called asynchronously.
-0. For transparent images, alpha blending is done according to the equations
+1. For transparent images, alpha blending is done according to the equations
    described [here](http://en.wikipedia.org/wiki/Alpha_compositing#Alpha_blending).
-0. Extra caution is required when using this method in batch mode, as the images
+1. Extra caution is required when using this method in batch mode, as the images
    may change by the time this operation is called.
 
 #### Set Pixel
@@ -546,15 +539,15 @@ Set the color of a pixel.
 
 0. `left, top {Integer}`: Coordinates of the pixel from the left-top corner of
    the image.
-0. `color {String / Array / Object}`: Color of the pixel to set.
+1. `color {String / Array / Object}`: Color of the pixel to set.
    See [colors specification](#colors-specification).
-0. `callback {Function(err, image)}`
+1. `callback {Function(err, image)}`
 
 **Notes:**
 
 0. If the coordinates exceed the bounds of the image, an exception is thrown.
-0. Extra caution is required when using this method in batch mode, as the
-  dimensions of the image may change by the time this operation is called.
+1. Extra caution is required when using this method in batch mode, as the
+   dimensions of the image may change by the time this operation is called.
 
 #### Set metadata
 
@@ -583,7 +576,7 @@ if present.
 coordinate.
 
 0. `left {Integer>=0}`
-0. `top {Integer>=0}`
+1. `top {Integer>=0}`
 
 Color is returned as an object. See [colors specification](#colors-specification).
 
@@ -617,7 +610,7 @@ Copy an area of the image into a new image object.
 `image.extract(left, top, right, bottom, callback)`
 
 0. `left, top, right, bottom {Integer}`: Coordinates of the area to copy.
-0. `callback {Function(err, newImage)}`
+1. `callback {Function(err, newImage)}`
 
 **Example**: See [`examples/extract.js`](examples/extract.js)
 
@@ -638,11 +631,13 @@ encoded data as a NodeJS Buffer object.
 `image.toBuffer(format, params, callback)`
 
 0. `format {String}`: Encoding format. Possible values:
-  - `"jpg"`
-  - `"png"`
-  - `"gif"`
+
+* `"jpg"`
+* `"png"`
+* `"gif"`
+
 0. `params {Object}`: **Optional** Format-specific parameters (See below).
-0. `callback {Function(err, buffer)}`
+1. `callback {Function(err, buffer)}`
 
 **Supported encoding formats:**
 
@@ -650,7 +645,7 @@ encoded data as a NodeJS Buffer object.
 
 The `params` object should have the following fields:
 
-- `quality {Integer}`: Defaults to `100`.
+* `quality {Integer}`: Defaults to `100`.
 
 Note that when encoding to JPEG the alpha channel is discarded.
 
@@ -658,12 +653,12 @@ Note that when encoding to JPEG the alpha channel is discarded.
 
 The `params` object should have the following fields:
 
-- `compression {String}`: Defaults to `"fast"`. Possible values:
-  - `"none"` - No compression. Fastest.
-  - `"fast"` - Basic compression. Fast.
-  - `"high"` - High compression. Slowest.
-- `interlaced {Boolean}`: Defaults to `false`.
-- `transparency {true/false/'auto'}`: Preserve transparency? Defaults to
+* `compression {String}`: Defaults to `"fast"`. Possible values:
+  * `"none"` - No compression. Fastest.
+  * `"fast"` - Basic compression. Fast.
+  * `"high"` - High compression. Slowest.
+* `interlaced {Boolean}`: Defaults to `false`.
+* `transparency {true/false/'auto'}`: Preserve transparency? Defaults to
   `'auto'`. Determines if the encoded image will have 3 or 4 channels. If
   `'auto'`, the image will be encoded with 4 channels if it has transparent
   components, and 3 channels otherwise.
@@ -672,14 +667,14 @@ The `params` object should have the following fields:
 
 The `params` object should have the following fields:
 
-- `colors {Integer}`: Defaults to `256`. Number of colors in the color table
+* `colors {Integer}`: Defaults to `256`. Number of colors in the color table
   (at most). Must be between 2 and 256.
-- `interlaced {Boolean}`: Defaults to `false`.
-- `transparency {true/false/'auto'}`: Preserve transparency? Defaults to
+* `interlaced {Boolean}`: Defaults to `false`.
+* `transparency {true/false/'auto'}`: Preserve transparency? Defaults to
   `'auto'`. Determines if the encoded image will have 3 or 4 channels. If
   `'auto'`, the image will be encoded with 4 channels if it has transparent
   components, and 3 channels otherwise.
-- `threshold {Integer}` - Between 0 and 100. Pixels in a gif image are either
+* `threshold {Integer}` - Between 0 and 100. Pixels in a gif image are either
   fully transparent or fully opaque. This value sets the alpha channel
   threshold to determine if a pixel is opaque or transparent. If the alpha
   channel of the pixel is above this threshold, this pixel will be considered
@@ -692,11 +687,11 @@ Write encoded binary image data directly to a file.
 `image.writeFile(path, format, params, callback)`
 
 0. `path {String}`: Path of file to write.
-0. `format {String}`: **Optional** Encoding format. If omitted, will be inferred
+1. `format {String}`: **Optional** Encoding format. If omitted, will be inferred
    from `path` extension. Possible values are specified in
    [Get as a Buffer](#get-as-a-buffer) section.
-0. `params {Object}`: **Optional** Format-specific parameters.
-0. `callback {Function(err)}`
+1. `params {Object}`: **Optional** Format-specific parameters.
+1. `callback {Function(err)}`
 
 #### Get Metadata
 
@@ -725,7 +720,7 @@ from the image.
 
 ```Javascript
 // obtain a batch object from the image:
-var batch = image.batch();
+var batch = new Batch(image);
 ```
 
 #### Using a batch object
@@ -755,9 +750,9 @@ receives an error object and the manipulated image object:
 
 `batch.exec(callback)`
 
-  - `callback {Function(err, image)}`:
-    - `err`: An error object or `null` when no error.
-    - `image`: An image object of the manipulated image.
+* `callback {Function(err, image)}`:
+  * `err`: An error object or `null` when no error.
+  * `image`: An image object of the manipulated image.
 
 ```Javascript
 batch.exec(function(err, image){
@@ -787,8 +782,8 @@ An image can have more than one batch object, but all batch objects modify the
 same underlying image. This means the order of execution matters.
 
 ```Javascript
-var batch1 = image.batch().rotate('45', 'black');
-var batch2 = image.batch().border(15, 'black');
+var batch1 = new Batch(image).rotate('45', 'black');
+var batch2 = new Batch(image).border(15, 'black');
 ```
 
 This will rotate the image 45degs and then add a black border:
@@ -815,18 +810,18 @@ batch2.exec(function(err, image){
 
 The native part of this module is compiled from source which uses the following:
 
-- Independent JPEG Group's free JPEG software:
-  - [Website](http://www.ijg.org/)
-  - [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/jpeg/README)
-- libpng:
-  - [Website](http://www.libpng.org/)
-  - [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/png/README)
-- zlib:
-  - [Website](http://www.zlib.net/)
-  - [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/zlib/README)
-- The CImg Library
-  - [Website](http://cimg.sourceforge.net/)
-  - [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/cimg/README.txt)
-- giflib
-  - [Website](http://giflib.sourceforge.net/)
-  - [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/gif/README)
+* Independent JPEG Group's free JPEG software:
+  * [Website](http://www.ijg.org/)
+  * [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/jpeg/README)
+* libpng:
+  * [Website](http://www.libpng.org/)
+  * [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/png/README)
+* zlib:
+  * [Website](http://www.zlib.net/)
+  * [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/zlib/README)
+* The CImg Library
+  * [Website](http://cimg.sourceforge.net/)
+  * [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/cimg/README.txt)
+* giflib
+  * [Website](http://giflib.sourceforge.net/)
+  * [Readme](https://github.com/EyalAr/lwip/blob/master/src/lib/gif/README)
