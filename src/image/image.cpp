@@ -38,11 +38,11 @@ LwipImage::~LwipImage() {
     delete _cimg;
 };
 
-Handle<Value> LwipImage::NewInstance() {
+Handle<Value> LwipImage::NewInstance(Local<Context> context) {
     Nan::EscapableHandleScope scope;
     Local<FunctionTemplate> constructorHandle = Nan::New<FunctionTemplate>(constructor);
-    Local<Object> instance = constructorHandle->GetFunction()->NewInstance();
-    return scope.Escape(instance);
+    MaybeLocal<Object> instance = constructorHandle->GetFunction()->NewInstance(context);
+    return scope.Escape(instance.ToLocalChecked());
 }
 
 NAN_METHOD(LwipImage::New) {
